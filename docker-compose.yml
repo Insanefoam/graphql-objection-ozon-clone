@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  bd:
+    image: postgres:11.6-alpine
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: ozon-clone
+    ports:
+      - 5433:5432
