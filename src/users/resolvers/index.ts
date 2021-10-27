@@ -1,1 +1,1 @@
-export { UsersResolver } from './users.resolver';
+export { UsersQueryResolver } from './users.query.resolver';
