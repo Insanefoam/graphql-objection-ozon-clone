@@ -4,9 +4,52 @@
 
 type User {
   id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
   name: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Category {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  name: String!
+  items: [Item!]!
+}
+
+type Item {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  name: String!
+  price: Float!
+  categories: [Category!]!
+}
+
 type Query {
-  user: User!
+  users: [User!]!
+  getManyItems: [Item!]!
+  getManyCategories: [Category!]!
+  getOneCategory(id: String!): Category
+}
+
+type Mutation {
+  createOneItem(input: CreateItemInput!): Item!
+  updateOneItem(id: String!, input: CreateItemInput!): Item!
+  signIn(input: SignInInput!): User
+}
+
+input CreateItemInput {
+  name: String!
+  price: Float!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
 }
