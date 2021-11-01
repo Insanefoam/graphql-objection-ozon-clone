@@ -1,9 +1,8 @@
 import * as Knex from 'knex';
 import { dbDefaultUUIDValue } from '../../utils/knex';
-import { Category } from '../models/category.model';
 
 export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable(Category.tableName, (tableBuilder) => {
+  await knex.schema.createTable('categories', (tableBuilder) => {
     tableBuilder
       .uuid('id')
       .defaultTo(knex.raw(dbDefaultUUIDValue))
@@ -23,5 +22,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable(Category.tableName);
+  await knex.schema.dropTable('categories');
 }

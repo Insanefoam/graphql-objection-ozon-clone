@@ -1,6 +1,5 @@
 import * as Knex from 'knex';
 import { dbDefaultUUIDValue } from '../../utils/knex';
-import { Category } from '../models/category.model';
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('categories_items', (tableBuilder) => {
@@ -32,5 +31,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable(Category.tableName);
+  await knex.schema.dropTable('categories_items');
 }

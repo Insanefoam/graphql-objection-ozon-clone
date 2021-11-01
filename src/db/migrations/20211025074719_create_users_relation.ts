@@ -1,16 +1,19 @@
 import * as Knex from 'knex';
-import { User } from '../models/user.model';
 
 export async function up(knex: Knex): Promise<void> {
   await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
 
-  await knex.schema.createTable(User.tableName, (tableBuilder) => {
+  await knex.schema.createTable('users', (tableBuilder) => {
     tableBuilder
       .uuid('id')
       .defaultTo(knex.raw('uuid_generate_v4()'))
       .unique()
       .primary();
+
     tableBuilder.string('name').nullable();
+    tableBuilder.string('email').unique();
+    tableBuilder.string('password');
+    tableBuilder.dateTime('birthday').nullable();
 
     tableBuilder
       .dateTime('createdAt')
@@ -24,5 +27,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable(User.tableName);
+  await knex.schema.dropTable('users');
 }
