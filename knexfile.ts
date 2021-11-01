@@ -1,7 +1,9 @@
 // Update with your config settings.
-
+import { config as envConfig } from 'dotenv';
 import { join } from 'path';
 import { Config } from 'knex';
+
+envConfig({ path: './local.env' });
 
 const config: Config = {
   client: 'postgresql',

@@ -9,6 +9,10 @@ import { DbModule } from './db/db.module';
 import { ItemsModule } from './items/items.module';
 import { CategoriesModule } from './categories/categories.module';
 import { AuthModule } from './auth/auth.module';
+import { CommonModule } from './common/common.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards';
+
 @Module({
   imports: [
     GraphQLModule.forRoot({
@@ -23,8 +27,9 @@ import { AuthModule } from './auth/auth.module';
     ItemsModule,
     CategoriesModule,
     AuthModule,
+    CommonModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
 export class AppModule {}
