@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthMutationResolver } from './resolvers';
+import { AuthMutationResolver, AuthQueryResolver } from './resolvers';
 import { AuthService, JwtConfigService } from './services';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies';
@@ -11,7 +11,13 @@ import { JwtAuthGuard } from './guards';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({ useClass: JwtConfigService }),
   ],
-  providers: [AuthService, AuthMutationResolver, JwtStrategy, JwtAuthGuard],
+  providers: [
+    AuthService,
+    AuthMutationResolver,
+    AuthQueryResolver,
+    JwtStrategy,
+    JwtAuthGuard,
+  ],
   exports: [JwtStrategy, AuthService],
 })
 export class AuthModule {}

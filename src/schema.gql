@@ -55,6 +55,7 @@ type Query {
   getManyItems: [Item!]!
   getManyCategories: [Category!]!
   getOneCategory(id: String!): Category
+  getMe: User!
 }
 
 type Mutation {
