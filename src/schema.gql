@@ -40,6 +40,11 @@ type Item {
   categories: [Category!]!
 }
 
+type GetManyItemsPayload {
+  results: [Item!]!
+  total: Float!
+}
+
 type SuccessSignInPayload {
   user: User!
   token: String!
@@ -52,7 +57,7 @@ type SuccessSignUpPayload {
 
 type Query {
   users: [User!]!
-  getManyItems: [Item!]!
+  getManyItems(page: Float = 1, limit: Float = 25): GetManyItemsPayload!
   getManyCategories: [Category!]!
   getOneCategory(id: String!): Category
   getMe: User!

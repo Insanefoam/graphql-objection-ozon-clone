@@ -1,10 +1,18 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { PaginationArgs } from 'src/common/args';
 import { Item } from 'src/db/models';
+import { GetManyItemsPayload } from '../items.payload';
 
 @Resolver(() => Item)
 export class ItemQueryResolver {
-  @Query(() => [Item])
-  async getManyItems(): Promise<Item[]> {
-    return Item.query().orderBy('createdAt', 'DESC');
+  @Query(() => GetManyItemsPayload)
+  async getManyItems(
+    @Args() args: PaginationArgs,
+  ): Promise<GetManyItemsPayload> {
+    const result = await Item.query()
+      .orderBy('createdAt', 'DESC')
+      .page(args.page, args.limit);
+
+    return result;
   }
 }

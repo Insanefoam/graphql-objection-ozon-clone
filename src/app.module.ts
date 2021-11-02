@@ -17,6 +17,10 @@ import { JwtAuthGuard } from './auth/guards';
   imports: [
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      buildSchemaOptions: {
+        dateScalarMode: 'isoDate',
+        numberScalarMode: 'float',
+      },
     }),
     ConfigModule.forRoot({
       envFilePath: ['local.env', 'staging.env', 'production.env'],
