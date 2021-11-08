@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Model } from 'objection';
+import { FieldFromResolver } from 'src/common/decorators';
 import { Item } from '.';
 import { BaseModel } from './base';
 
@@ -12,7 +13,7 @@ export class Category extends BaseModel {
   @Field()
   name: string;
 
-  @Field(() => [Item])
+  @FieldFromResolver(() => [Item])
   items: Item[];
 
   static relationMappings = {

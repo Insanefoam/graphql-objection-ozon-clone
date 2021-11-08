@@ -2,6 +2,7 @@ import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { Model } from 'objection';
 import { BaseModel } from './base';
 import { Category } from '.';
+import { FieldFromResolver } from 'src/common/decorators';
 
 @ObjectType()
 export class Item extends BaseModel {
@@ -15,7 +16,7 @@ export class Item extends BaseModel {
   @Field(() => Float)
   price: number;
 
-  @Field(() => [Category])
+  @FieldFromResolver(() => [Category])
   categories: Category[];
 
   static relationMappings = {

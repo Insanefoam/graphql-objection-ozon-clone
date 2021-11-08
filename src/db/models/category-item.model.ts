@@ -3,6 +3,7 @@ import { Model } from 'objection';
 import { Category } from './category.model';
 import { BaseModel } from './base';
 import { Item } from './item.model';
+import { FieldFromResolver } from 'src/common/decorators';
 
 @ObjectType()
 export class CategoryItem extends BaseModel {
@@ -10,13 +11,13 @@ export class CategoryItem extends BaseModel {
     return 'categories_items';
   }
 
-  @Field(() => Category)
+  @FieldFromResolver(() => Category)
   category: Category;
 
   @Field()
   categoryId: string;
 
-  @Field(() => Item)
+  @FieldFromResolver(() => Item)
   item: Item;
 
   @Field()
