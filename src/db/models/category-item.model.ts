@@ -13,8 +13,14 @@ export class CategoryItem extends BaseModel {
   @Field(() => Category)
   category: Category;
 
+  @Field()
+  categoryId: string;
+
   @Field(() => Item)
   item: Item;
+
+  @Field()
+  itemId: string;
 
   static relationMappings = {
     category: {

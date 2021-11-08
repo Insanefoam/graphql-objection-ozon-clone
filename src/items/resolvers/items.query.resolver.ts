@@ -9,9 +9,7 @@ export class ItemQueryResolver {
   async getManyItems(
     @Args() args: PaginationArgs,
   ): Promise<GetManyItemsPayload> {
-    const result = await Item.query()
-      .orderBy('createdAt', 'DESC')
-      .page(args.page, args.limit);
+    const result = await Item.query().page(args.page, args.limit);
 
     return result;
   }

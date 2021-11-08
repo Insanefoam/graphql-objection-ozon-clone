@@ -17,6 +17,7 @@ export const knexOptionsProvider: Provider = {
         password: configService.get<string>('DB_PASSWORD'),
       },
       migrations: { tableName: '__migrations__' },
+      debug: true,
     };
   },
   inject: [ConfigService],
