@@ -40,9 +40,43 @@ type Item {
   categories: [Category!]!
 }
 
+type GetMePayload {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  email: Email!
+  name: String!
+  avatarUrl: URL
+  birthday: DateTime
+}
+
+type UserQueriesNamespace {
+  getMe: GetMePayload!
+  getMany: [User!]!
+}
+
+type CategoryQueriesNamespace {
+  getManyCategories: [Category!]!
+  getOneCategory(id: String!): Category!
+}
+
 type GetManyItemsPayload {
   results: [Item!]!
   total: Float!
+}
+
+type ItemQueriesNamespace {
+  getManyItems(page: Float = 1, limit: Float = 25): GetManyItemsPayload!
+}
+
+type ItemMutationsNamespace {
+  createOneItem(input: CreateItemInput!): Item!
+  updateOneItem(id: String!, input: CreateItemInput!): Item!
+}
+
+input CreateItemInput {
+  name: String!
+  price: Float!
 }
 
 type SuccessSignInPayload {
@@ -55,24 +89,9 @@ type SuccessSignUpPayload {
   token: String!
 }
 
-type Query {
-  users: [User!]!
-  getManyItems(page: Float = 1, limit: Float = 25): GetManyItemsPayload!
-  getManyCategories: [Category!]!
-  getOneCategory(id: String!): Category
-  getMe: User!
-}
-
-type Mutation {
-  createOneItem(input: CreateItemInput!): Item!
-  updateOneItem(id: String!, input: CreateItemInput!): Item!
-  signIn(input: SignInInput!): SuccessSignInPayload
+type AuthMutationsNamespace {
+  signIn(input: SignInInput!): SuccessSignInPayload!
   signUp(input: SignUpInput!): SuccessSignUpPayload!
-}
-
-input CreateItemInput {
-  name: String!
-  price: Float!
 }
 
 input SignInInput {
@@ -84,4 +103,15 @@ input SignUpInput {
   email: Email!
   name: String!
   password: String!
+}
+
+type Query {
+  users: UserQueriesNamespace!
+  items: ItemQueriesNamespace!
+  categories: CategoryQueriesNamespace!
+}
+
+type Mutation {
+  items: ItemMutationsNamespace!
+  auth: AuthMutationsNamespace!
 }

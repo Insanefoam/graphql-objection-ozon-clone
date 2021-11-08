@@ -1,3 +1,3 @@
-export { ItemFieldsResolver } from './items.field.resolver';
-export { ItemMutationResolver } from './items.mutation.resolver';
-export { ItemQueryResolver } from './items.query.resolver';
+export { ItemsFieldResolver } from './items.field.resolver';
+export { ItemsMutationResolver } from './items.mutation.resolver';
+export { ItemsQueryResolver } from './items.query.resolver';

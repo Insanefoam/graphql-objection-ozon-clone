@@ -1,15 +1,21 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { Public } from 'src/common/decorators';
 import { SignInInput, SignUpInput } from '../auth.inputs';
 import { SuccessSignInPayload, SuccessSignUpPayload } from '../auth.payloads';
+import { AuthMutationsNamespace } from '../auth.types';
 import { AuthService } from '../services';
 
-@Resolver()
+@Resolver(() => AuthMutationsNamespace)
 export class AuthMutationResolver {
   constructor(private readonly authService: AuthService) {}
 
+  @Mutation(() => AuthMutationsNamespace)
+  async auth() {
+    return {};
+  }
+
   @Public()
-  @Mutation(() => SuccessSignInPayload, { nullable: true })
+  @ResolveField(() => SuccessSignInPayload, { nullable: true })
   async signIn(
     @Args('input') input: SignInInput,
   ): Promise<SuccessSignInPayload> {
@@ -17,7 +23,7 @@ export class AuthMutationResolver {
   }
 
   @Public()
-  @Mutation(() => SuccessSignUpPayload)
+  @ResolveField(() => SuccessSignUpPayload)
   async signUp(
     @Args('input') input: SignUpInput,
   ): Promise<SuccessSignUpPayload> {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { CategoriesResolver } from './resolvers';
+import { CategoriesFieldResolver, CategoriesResolver } from './resolvers';
 
 @Module({
-  providers: [CategoriesResolver],
+  providers: [CategoriesResolver, CategoriesFieldResolver],
 })
 export class CategoriesModule {}

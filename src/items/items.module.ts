@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
 import { CategoriesModule } from 'src/categories/categories.module';
 import {
-  ItemFieldsResolver,
-  ItemMutationResolver,
-  ItemQueryResolver,
+  ItemsFieldResolver,
+  ItemsMutationResolver,
+  ItemsQueryResolver,
 } from './resolvers';
+import { ItemsService } from './services';
 
 @Module({
   imports: [CategoriesModule],
-  providers: [ItemFieldsResolver, ItemMutationResolver, ItemQueryResolver],
+  providers: [
+    ItemsFieldResolver,
+    ItemsMutationResolver,
+    ItemsQueryResolver,
+    ItemsService,
+  ],
 })
 export class ItemsModule {}
