@@ -1,7 +1,11 @@
 import { ObjectType } from '@nestjs/graphql';
 import { FieldFromResolver } from 'src/common/decorators';
-import { Favorite, Item } from 'src/db/models';
-import { GetFavoriteItemsPayload, GetManyItemsPayload } from './items.payload';
+import { Item } from 'src/db/models';
+import {
+  GetFavoriteItemsPayload,
+  GetManyItemsPayload,
+  ToggleFavoritePayload,
+} from './items.payload';
 
 @ObjectType()
 export class ItemQueriesNamespace {
@@ -20,6 +24,6 @@ export class ItemMutationsNamespace {
   @FieldFromResolver(() => Item)
   updateOneItem: Item;
 
-  @FieldFromResolver(() => Favorite)
-  toggleFavorite: Favorite;
+  @FieldFromResolver(() => ToggleFavoritePayload)
+  toggleFavorite: ToggleFavoritePayload;
 }

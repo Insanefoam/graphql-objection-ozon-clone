@@ -75,6 +75,15 @@ type GetManyItemsPayload {
   total: Float!
 }
 
+type ToggleFavoriteProblem {
+  message: String!
+}
+
+type ToggleFavoritePayload {
+  node: Favorite
+  problem: ToggleFavoriteProblem
+}
+
 type GetFavoriteItemsPayload {
   results: [Favorite!]!
   total: Float!
@@ -88,7 +97,7 @@ type ItemQueriesNamespace {
 type ItemMutationsNamespace {
   createOneItem(input: CreateItemInput!): Item!
   updateOneItem(id: String!, input: CreateItemInput!): Item!
-  toggleFavorite(input: ToggleFavoriteInput!): Favorite!
+  toggleFavorite(input: ToggleFavoriteInput!): ToggleFavoritePayload!
 }
 
 input CreateItemInput {

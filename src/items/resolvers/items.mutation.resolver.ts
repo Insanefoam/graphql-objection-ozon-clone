@@ -3,7 +3,8 @@ import { Args, Mutation, ResolveField, Resolver } from '@nestjs/graphql';
 import { IAM } from 'src/common/decorators';
 import { Favorite, Item, User } from 'src/db/models';
 import { CreateItemInput, ToggleFavoriteInput } from '../items.inputs';
-import { ItemMutationsNamespace } from '../items.types';
+import { ItemMutationsNamespace } from '../items.namespaces';
+import { ToggleFavoritePayload, ToggleFavoriteProblem } from '../items.payload';
 
 @Resolver(() => ItemMutationsNamespace)
 export class ItemsMutationResolver {
@@ -29,32 +30,34 @@ export class ItemsMutationResolver {
     return updatedItem;
   }
 
-  @ResolveField(() => Favorite)
+  @ResolveField(() => ToggleFavoritePayload)
   async toggleFavorite(
     @IAM() user: User,
     @Args('input') input: ToggleFavoriteInput,
-  ): Promise<Favorite> {
+  ): Promise<ToggleFavoritePayload> {
     const favorite = await Favorite.query().findOne({
       userId: user.id,
       itemId: input.itemId,
     });
 
     if (!favorite && !input.isFavorite) {
-      //TODO Add problem
+      return { problem: new ToggleFavoriteProblem() };
     }
 
     if (favorite && input.isFavorite) {
-      return favorite;
+      return { node: favorite };
     }
 
     if (!input.isFavorite) {
       await Favorite.query().deleteById(favorite.id);
-      return favorite;
+      return { node: favorite };
     }
 
-    return Favorite.query().insertAndFetch({
+    const savedFavorite = await Favorite.query().insertAndFetch({
       itemId: input.itemId,
       userId: user.id,
     });
+
+    return { node: savedFavorite };
   }
 }

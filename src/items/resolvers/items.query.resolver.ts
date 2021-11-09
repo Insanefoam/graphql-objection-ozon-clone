@@ -3,7 +3,7 @@ import { PaginationArgs } from 'src/common/args';
 import { IAM } from 'src/common/decorators';
 import { Favorite, Item, User } from 'src/db/models';
 import { GetFavoriteItemsPayload, GetManyItemsPayload } from '../items.payload';
-import { ItemQueriesNamespace } from '../items.types';
+import { ItemQueriesNamespace } from '../items.namespaces';
 
 @Resolver(() => ItemQueriesNamespace)
 export class ItemsQueryResolver {
