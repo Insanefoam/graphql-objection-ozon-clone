@@ -11,3 +11,9 @@ export class UserQueriesNamespace {
   @FieldFromResolver(() => [User])
   getMany: User[];
 }
+
+@ObjectType()
+export class UserMutationsNamespace {
+  @FieldFromResolver(() => User)
+  updateMe: User;
+}

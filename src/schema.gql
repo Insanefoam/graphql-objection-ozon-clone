@@ -65,6 +65,16 @@ type UserQueriesNamespace {
   getMany: [User!]!
 }
 
+type UserMutationsNamespace {
+  updateMe(input: UpdateMeInput!): User!
+}
+
+input UpdateMeInput {
+  name: String!
+  avatarUrl: URL
+  birthday: DateTime
+}
+
 type CategoryQueriesNamespace {
   getManyCategories: [Category!]!
   getOneCategory(id: String!): Category!
@@ -143,6 +153,7 @@ type Query {
 }
 
 type Mutation {
+  users: UserMutationsNamespace!
   items: ItemMutationsNamespace!
   auth: AuthMutationsNamespace!
 }

@@ -2,7 +2,7 @@ import { Resolver, Query, ResolveField } from '@nestjs/graphql';
 import { IAM } from 'src/common/decorators';
 import { User } from '../../db/models/user.model';
 import { GetMePayload } from '../users.payload';
-import { UserQueriesNamespace } from '../users.types';
+import { UserQueriesNamespace } from '../users.namespaces';
 
 @Resolver(() => UserQueriesNamespace)
 export class UsersQueryResolver {
