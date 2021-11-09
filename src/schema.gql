@@ -40,6 +40,16 @@ type Item {
   categories: [Category!]!
 }
 
+type Favorite {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  user: User!
+  userId: String!
+  item: Item!
+  itemId: String!
+}
+
 type GetMePayload {
   id: ID!
   updatedAt: DateTime!
@@ -65,18 +75,30 @@ type GetManyItemsPayload {
   total: Float!
 }
 
+type GetFavoriteItemsPayload {
+  results: [Favorite!]!
+  total: Float!
+}
+
 type ItemQueriesNamespace {
   getManyItems(page: Float = 1, limit: Float = 25): GetManyItemsPayload!
+  getFavoriteItems: GetFavoriteItemsPayload!
 }
 
 type ItemMutationsNamespace {
   createOneItem(input: CreateItemInput!): Item!
   updateOneItem(id: String!, input: CreateItemInput!): Item!
+  toggleFavorite(input: ToggleFavoriteInput!): Favorite!
 }
 
 input CreateItemInput {
   name: String!
   price: Float!
+}
+
+input ToggleFavoriteInput {
+  itemId: String!
+  isFavorite: Boolean!
 }
 
 type SuccessSignInPayload {

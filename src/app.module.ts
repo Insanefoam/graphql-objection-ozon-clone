@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { JwtAuthGuard } from './auth/guards';
     CategoriesModule,
     AuthModule,
     CommonModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],

@@ -1,7 +1,8 @@
 import { ParseUUIDPipe } from '@nestjs/common';
 import { Args, Mutation, ResolveField, Resolver } from '@nestjs/graphql';
-import { Item } from 'src/db/models';
-import { CreateItemInput } from '../items.inputs';
+import { IAM } from 'src/common/decorators';
+import { Favorite, Item, User } from 'src/db/models';
+import { CreateItemInput, ToggleFavoriteInput } from '../items.inputs';
 import { ItemMutationsNamespace } from '../items.types';
 
 @Resolver(() => ItemMutationsNamespace)
@@ -26,5 +27,34 @@ export class ItemsMutationResolver {
     const updatedItem = await Item.query().patchAndFetchById(id, { ...input });
 
     return updatedItem;
+  }
+
+  @ResolveField(() => Favorite)
+  async toggleFavorite(
+    @IAM() user: User,
+    @Args('input') input: ToggleFavoriteInput,
+  ): Promise<Favorite> {
+    const favorite = await Favorite.query().findOne({
+      userId: user.id,
+      itemId: input.itemId,
+    });
+
+    if (!favorite && !input.isFavorite) {
+      //TODO Add problem
+    }
+
+    if (favorite && input.isFavorite) {
+      return favorite;
+    }
+
+    if (!input.isFavorite) {
+      await Favorite.query().deleteById(favorite.id);
+      return favorite;
+    }
+
+    return Favorite.query().insertAndFetch({
+      itemId: input.itemId,
+      userId: user.id,
+    });
   }
 }
